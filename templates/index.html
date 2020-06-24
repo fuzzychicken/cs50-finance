@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+    <thead>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Shares</th>
+        <th>Current Price</th>
+        <th>Total</th>
+    </thead>
+    <tbody>
+        {% for i in range(length) %}
+        <tr>
+            <td>{{ all_stocks[i]["symbol"] }}</td>
+            <td>{{ all_stocks[i]["name"] }}</td>
+            <td>{{ all_stocks[i]["shares"] }}</td>
+            <td>{{ all_stocks[i]["currPrice"] }}</td>
+            <td>{{ all_stocks[i]["totalStock"] }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>CASH</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ totalCash }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>{{ grandTotal }}</th>
+        </tr>
+    </tbody>
+    </table>
+{% endblock %}
