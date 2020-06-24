@@ -338,8 +338,8 @@ def deposit():
 
     else:
         # Check if something was actually inputted
-        if not request.form.get("amount"):
-            return apology("Please input something")
+        if not request.form.get("amount") or request.form.get("amount").isnumeric() == False:
+            return apology("Please input a number")
 
         else:
             depositAmt = float(request.form.get("amount"))
@@ -350,6 +350,8 @@ def deposit():
 
         # Add deposit amount to user's cash in db
         db.execute("UPDATE users SET cash = cash + :depositAmt WHERE id=:idd", idd=session["user_id"], depositAmt=depositAmt)
+        db.execute("INSERT INTO sales (id, shares, price, name) VALUES (?,?,?,?)",
+                    session["user_id"], "N/A", depositAmt, "DEPOSIT")
 
         return redirect("/")
 
