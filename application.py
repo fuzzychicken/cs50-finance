@@ -45,6 +45,9 @@ if not os.environ.get("API_KEY"):
 def index():
     """Show portfolio of stocks"""
 
+    # Do not show any stocks if you don't own any shares
+    db.execute("DELETE FROM portfolios WHERE shares=:shares", shares=0)
+
     # Get current user's id
     currentid = session["user_id"]
 
