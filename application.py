@@ -298,6 +298,10 @@ def sell():
         if not stockSymbol:
             return apology("You did not select a stock symbol to sell")
 
+        # Check if user tries to sell 0 shares
+        if stockShares == 0:
+            return apology("You cannot sell 0 shares")
+
         # Get user's cash amount
         cash = db.execute("SELECT cash FROM users WHERE id = :idd", idd=session["user_id"])[0]["cash"]
 
@@ -330,7 +334,12 @@ def deposit():
         return render_template("deposit.html")
 
     else:
-        depositAmt = float(request.form.get("amount"))
+        # Check if something was actually inputted
+        if not request.form.get("amount"):
+            return apology("Please input something")
+
+        else:
+            depositAmt = float(request.form.get("amount"))
 
         # Check if amt is positive and not zero
         if not depositAmt > 0:
